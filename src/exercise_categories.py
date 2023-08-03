@@ -1,12 +1,12 @@
 from flask import Blueprint, Flask, request, jsonify, make_response
 from src.database import ExerciseCategory, db
-import src.constants.http_status_codes
+#import src.constants.http_status_codes
 
 exercise_categories = Blueprint("exercise_categories", __name__, url_prefix="/api/exercise_categories")
 
 @exercise_categories.route('/test', methods=['GET'])
 def test():
-  return make_response(jsonify({'message': 'test route'}), 200)
+  return make_response(jsonify({'message': 'exercise categories test'}), 200)
 
 
 # create an exercise category

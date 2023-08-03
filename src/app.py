@@ -40,7 +40,7 @@ def create_exercise_category():
     db.session.add(new_exercise_category)
     db.session.commit()
     return make_response(jsonify({'message': 'exercise category created'}), 201)
-  except e:
+  except:
     return make_response(jsonify({'message': 'error creating exercise category'}), 500)
 
 # get all exercise categories
@@ -49,7 +49,7 @@ def get_exercise_categories():
   try:
     exercise_categories = ExerciseCategory.query.all()
     return make_response(jsonify([exercise_category.json() for exercise_category in exercise_categories]), 200)
-  except e:
+  except:
     return make_response(jsonify({'message': 'error getting exercise categories'}), 500)
 
 # update an exercise category
@@ -67,7 +67,7 @@ def update_exercise_category(categoryId):
       db.session.commit()
       return make_response(jsonify({'message': 'exercise category updated'}), 200)
     return make_response(jsonify({'message': 'exercise category not found'}), 404)
-  except e:
+  except:
     return make_response(jsonify({'message': 'error updating exercise category'}), 500)
 
 # delete an exercise category
@@ -80,5 +80,5 @@ def delete_exercise_category(categoryId):
       db.session.commit()
       return make_response(jsonify({'message': 'exercise category deleted'}), 200)
     return make_response(jsonify({'message': 'exercise category not found'}), 404)
-  except e:
+  except:
     return make_response(jsonify({'message': 'error deleting exercise category'}), 500)
