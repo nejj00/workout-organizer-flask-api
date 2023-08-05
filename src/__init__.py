@@ -3,6 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from src.exercise_categories import exercise_categories
 from src.exercises import exercises
+from src.workout_routines import workout_routines
+from src.routine_sets import routine_sets
+from src.logged_workout_routines import logged_workout_routines
+from src.logged_routine_sets import logged_routine_sets
+from src.logged_exercise_sets import logged_exercise_sets
+from src.users import users
 from src.database import db
 #from flask import Swagger, swag_from
 #from src.config.swagger import template, swagger_config
@@ -31,6 +37,12 @@ def create_app(test_config=None):
     
     app.register_blueprint(exercise_categories)
     app.register_blueprint(exercises)
+    app.register_blueprint(workout_routines)
+    app.register_blueprint(routine_sets)
+    app.register_blueprint(logged_workout_routines)
+    app.register_blueprint(logged_routine_sets)
+    app.register_blueprint(logged_exercise_sets)
+    app.register_blueprint(users)
     
     #Swagger(app, config=swagger_config, template=template)
     

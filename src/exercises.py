@@ -8,6 +8,15 @@ exercises = Blueprint("exercises", __name__, url_prefix="/api/exercises")
 def test():
   return make_response(jsonify({'message': 'exercises test'}), 200)
 
+# get all exercises
+@exercises.route('/', methods=['GET'])
+def get_exercises():
+  try:
+    exercises = Exercise.query.all()
+    return make_response(jsonify([exercise.json() for exercise in exercises]), 200)
+  except:
+    return make_response(jsonify({'message': 'error getting exercises'}), 500)
+  
 # create an exercise
 @exercises.route('/', methods=['POST'])
 def create_exercise():
@@ -28,15 +37,26 @@ def create_exercise():
   except:
     return make_response(jsonify({'message': 'error creating exercise'}), 500)
 
-# get all exercises
-@exercises.route('/', methods=['GET'])
-def get_exercises():
+# update an exercise
+@exercises.route('/<int:exerciseId>', methods=['PUT'])
+def update_exercise(exerciseId):
   try:
-    exercises = Exercise.query.all()
-    return make_response(jsonify([exercise.json() for exercise in exercises]), 200)
+    exercise = Exercise.query.filter_by(exerciseId=exerciseId).first()
+    if exercise:
+      data = request.get_json()
+      
+      exercise.categoryId = data['categoryId']
+      exercise.name = data['name']
+      exercise.type = data['type']
+      exercise.isSingleSide = data['isSingleSide']
+      exercise.isUserMade = data['isUserMade']
+      exercise.userUID = data['userUID']
+      
+      db.session.commit()
+      return make_response(jsonify({'message': 'exercise updated'}), 200)
+    return make_response(jsonify({'message': 'exercise not found'}), 404)
   except:
-    return make_response(jsonify({'message': 'error getting exercises'}), 500)
-  
+    return make_response(jsonify({'message': 'error updating exercise'}), 500)
   
 # delete an exercise
 @exercises.route('/<int:exerciseId>', methods=['DELETE'])
