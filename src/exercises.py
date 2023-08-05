@@ -14,10 +14,10 @@ def create_exercise():
   try:
     data = request.get_json()
     new_exercise = Exercise(
-      categoryId=['categoryId'], 
+      categoryId=data['categoryId'], 
       name=data['name'], 
       type=data['type'], 
-      isSingleSide=['isSingleSide'], 
+      isSingleSide=data['isSingleSide'], 
       isUserMade=data['isUserMade'], 
       userUID=data['userUID']
       )
